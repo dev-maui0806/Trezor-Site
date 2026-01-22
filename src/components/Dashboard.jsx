@@ -259,9 +259,17 @@ function ConnectTrezorModal({ isOpen, onClose, onHelpClick }) {
   )
 }
 
-export default function Dashboard() {
+export default function Dashboard({ setIsLoading }) {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false)
   const [isTroubleshootingModalOpen, setIsTroubleshootingModalOpen] = useState(false)
+
+  const handleConnectClick = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      setIsConnectModalOpen(true)
+    }, 2000)
+  }
 
   return (
     <>
@@ -292,7 +300,7 @@ export default function Dashboard() {
                 <button
                   type="button"
                   className="connect-button"
-                  onClick={() => setIsConnectModalOpen(true)}
+                  onClick={handleConnectClick}
                 >
                   <span>Connect</span>
                 </button>

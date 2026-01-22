@@ -1251,7 +1251,7 @@
 }
 
 .experimental-learn-more-button {
-  app-region: no-drag;
+  /* app-region: no-drag; */
   background-color: rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   color: rgb(158, 158, 255);
@@ -1484,6 +1484,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   color: rgb(160, 164, 172);
   opacity: 0;
   transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
@@ -1497,6 +1501,15 @@
   pointer-events: auto;
   color: rgb(96, 226, 151);
   transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+
+.coin-button-settings-icon:focus {
+  outline: none;
+}
+
+.coin-button-settings-icon:focus-visible {
+  outline: 2px solid rgb(98, 209, 255);
+  outline-offset: 2px;
 }
 
 .coin-button-selected:hover .coin-button-settings-icon-visible {
@@ -3147,6 +3160,13 @@
 }
 
 /* Responsive */
+@media (max-width: 990px) {
+  /* Hide promo image on screens less than 990px */
+  .promo-image {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .promo-content {
     grid-template-columns: 1fr;
@@ -3164,16 +3184,20 @@
 
   .section-header {
     min-width: auto;
+    width: 100%;
     padding-top: 0;
   }
 
+  .settings-section{
+    width:100%;
+  }
+
   .setting-item {
-    flex-direction: column;
     align-items: flex-start;
   }
 
   .setting-item-control {
-    width: 100%;
+    width: auto;
   }
 
   .select-box {
@@ -3220,6 +3244,41 @@
   .experimental-item-control {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  /* Hide promo card on mobile */
+  .promo-card {
+    display: none;
+  }
+
+  /* Fix section container width on mobile */
+  .settings-content {
+    padding: 8px;
+    max-width: 100%;
+  }
+
+  .settings-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .section-container {
+    width: 100%;
+  }
+
+  /* Make setting items responsive */
+  .setting-item-content {
+    width: 100%;
+  }
+
+  .setting-item-label {
+    font-size: 14px;
+  }
+
+  .setting-item-description {
+    font-size: 12px;
   }
 }
 
@@ -3916,4 +3975,100 @@
 
 .coin-settings-server-dropdown-option-text {
   display: inline;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 668px) {
+  .promo-card {
+    display: none;
+  }
+
+  .settings-content {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .section-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .section-header {
+    min-width: 100%;
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .section-header-title {
+    font-size: 18px;
+  }
+
+  .settings-section {
+    width: 100%;
+    flex: 1;
+  }
+
+  .setting-item {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .setting-item-content {
+    flex: 1;
+    max-width: none;
+  }
+
+  .setting-item-control {
+    display: flex;
+    align-items: center;
+  }
+
+  .select-box {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .language-dropdown-wrapper {
+    width: auto;
+  }
+
+  .language-dropdown-trigger {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .currency-dropdown-wrapper {
+    width: auto;
+  }
+
+  .currency-dropdown-trigger {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .bitcoin-units-dropdown-wrapper {
+    width: auto;
+  }
+
+  .bitcoin-units-dropdown-trigger {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .coins-grid-section {
+    padding: 16px;
+    width:100%
+  }
+
+  .coins-grid {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .coin-button {
+    width: 100%;
+  }
 }

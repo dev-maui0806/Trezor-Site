@@ -72,10 +72,10 @@
 }
 
 .sidebar-footer {
-  padding: 8px;
+  padding: 0 8px 8px 8px;
   border-top: 1px solid rgb(37, 38, 40);
   display: flex;
-  gap: 8px;
+  gap: 0;
 }
 
 .status-container {
@@ -85,7 +85,8 @@
 }
 
 .status-item {
-  flex: 1;
+  flex-basis: 0%;
+  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,7 +96,7 @@
 .status-button {
   position: relative;
   width: 100%;
-  height: 20px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,8 +111,6 @@
 }
 
 .status-icon {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,16 +118,27 @@
   color: rgb(160, 164, 172);
 }
 
-.status-item:first-child .status-icon {
+.status-icon-check {
+  width: 24px;
+  height: 24px;
   border-radius: 6px;
 }
 
-.status-item:last-child .status-icon {
-  border-radius: 6px;
+.status-icon-atom {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  border: none;
 }
 
-.status-item:first-child .status-button::after {
-  content: '';
+.status-icon-eye {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  border: none;
+}
+
+.status-badge {
   position: absolute;
   right: -4px;
   top: -4px;
@@ -156,7 +166,6 @@
 .activity-modal {
   position: fixed;
   top: 140px;
-  left: 300px;
   width: 400px;
   max-height: 600px;
   background-color: rgb(21, 23, 25);
@@ -295,4 +304,79 @@
   margin: 0;
   padding: 0;
   line-height: 20px;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 668px) {
+  .sidebar {
+    width: 58px;
+    min-width: 58px;
+  }
+
+  .sidebar-header {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-container {
+    width: auto;
+    display: none;
+  }
+
+  .nav-item {
+    gap: 0;
+    padding: 12px;
+    justify-content: center;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sidebar-footer {
+    padding: 8px;
+  }
+
+  .status-container {
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  .status-item {
+    flex-basis: auto;
+    flex-grow: 0;
+    height: 44px;
+    width: 100%;
+  }
+
+  .status-button {
+    height: 100%;
+    width: 100%;
+  }
+
+  .status-icon-check {
+    width: 24px;
+    height: 24px;
+  }
+
+  .status-icon-atom {
+    width: 16px;
+    height: 16px;
+  }
+
+  .status-icon-eye {
+    width: 16px;
+    height: 16px;
+  }
+
+  .activity-modal {
+    width: 350px;
+  }
 }

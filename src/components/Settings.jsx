@@ -1900,6 +1900,17 @@ function CoinsTab() {
                         <network.icon />
                       )}
                     </div>
+                  
+                    {/* {network.enabled && (
+                      <div className="coin-button-checkmark-badge">
+                        <CheckmarkIcon />
+                      </div>
+                    )} */}
+                  </div>
+                  <div className="coin-button-content">
+                    <div className="coin-button-name">{network.name}</div>
+                    <div className="coin-button-subtitle">TEST COIN</div>
+                  </div>
                     <button
                       type="button"
                       className={`coin-button-settings-icon ${isSelected && isHovered ? 'coin-button-settings-icon-visible' : ''}`}
@@ -1907,16 +1918,6 @@ function CoinsTab() {
                     >
                       <GearIcon />
                     </button>
-                    {network.enabled && (
-                      <div className="coin-button-checkmark-badge">
-                        <CheckmarkIcon />
-                      </div>
-                    )}
-                  </div>
-                  <div className="coin-button-content">
-                    <div className="coin-button-name">{network.name}</div>
-                    <div className="coin-button-subtitle">TEST COIN</div>
-                  </div>
                 </button>
               )
             })}

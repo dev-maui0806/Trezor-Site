@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './Sidebar.css'
 
 const DashboardIcon = () => (
@@ -61,6 +61,21 @@ const CheckIcon = () => (
   </svg>
 )
 
+const AtomIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 32 32"
+    width="100%"
+    height="100%"
+  >
+    <path
+      fill="rgb(242, 174, 84)"
+      d="M24.515 16c3.081-4.326 4.653-8.798 2.468-10.983S20.326 4.404 16 7.485C11.674 4.404 7.203 2.832 5.018 5.017S4.404 11.674 7.485 16c-3.081 4.326-4.652 8.797-2.467 10.982C5.72 27.686 6.66 28 7.756 28c2.31 0 5.31-1.396 8.25-3.485C18.934 26.604 21.934 28 24.25 28c1.095 0 2.036-.315 2.739-1.018 2.179-2.185.607-6.656-2.474-10.982m1.055-9.57c.955.955.31 4.05-2.315 7.91a38 38 0 0 0-2.649-2.946A38 38 0 0 0 17.66 8.75c3.86-2.625 6.955-3.275 7.91-2.319zM22.036 16a36 36 0 0 1-2.845 3.191 36 36 0 0 1-3.19 2.845 36 36 0 0 1-3.192-2.845A36 36 0 0 1 9.964 16 37.3 37.3 0 0 1 16 9.964a36 36 0 0 1 3.191 2.845 36 36 0 0 1 2.845 3.19zM6.431 6.43c.275-.276.73-.419 1.328-.419 1.477 0 3.836.863 6.581 2.738a38 38 0 0 0-2.945 2.645A38 38 0 0 0 8.75 14.34c-2.625-3.86-3.274-6.955-2.319-7.91m0 19.138c-.955-.955-.306-4.05 2.32-7.91a38 38 0 0 0 2.648 2.946 38 38 0 0 0 2.942 2.645c-3.86 2.625-6.955 3.275-7.91 2.319m19.138 0c-.955.956-4.05.31-7.91-2.315a38 38 0 0 0 2.946-2.65 38 38 0 0 0 2.645-2.945c2.625 3.86 3.274 6.955 2.319 7.91m-8.069-9.57a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
+    />
+  </svg>
+)
+
 const EyeIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -99,12 +114,12 @@ const CloseIcon = () => (
   </svg>
 )
 
-function ActivityModal({ isOpen, onClose, activeTab, onTabChange }) {
+function ActivityModal({ isOpen, onClose, activeTab, onTabChange, sidebarWidth }) {
   if (!isOpen) return null
 
   return (
     <div className="activity-modal-container">
-      <div className="activity-modal">
+      <div className="activity-modal" style={{ left: `${sidebarWidth + 20}px` }}>
         <div className="activity-modal-header">
           <nav className="activity-modal-tabs">
             <button
@@ -148,9 +163,28 @@ function ActivityModal({ isOpen, onClose, activeTab, onTabChange }) {
 export default function Sidebar({ currentPage, onNavigate }) {
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false)
   const [activityTab, setActivityTab] = useState('notifications')
+  const [sidebarWidth, setSidebarWidth] = useState(280)
+  const sidebarRef = useRef(null)
+
+  useEffect(() => {
+    const updateSidebarWidth = () => {
+      if (sidebarRef.current) {
+        setSidebarWidth(sidebarRef.current.offsetWidth)
+      }
+    }
+
+    updateSidebarWidth()
+    window.addEventListener('resize', updateSidebarWidth)
+    return () => window.removeEventListener('resize', updateSidebarWidth)
+  }, [])
+
+  const handleNavigation = (page) => {
+    setIsActivityModalOpen(false)
+    onNavigate(page)
+  }
 
   return (
-    <aside className="sidebar">
+    <aside className="sidebar" ref={sidebarRef}>
       <div className="sidebar-header">
         <div className="logo-container">
           <TrezorLogo />
@@ -160,7 +194,7 @@ export default function Sidebar({ currentPage, onNavigate }) {
       <nav className="nav-menu">
         <button
           className={`nav-item ${currentPage === 'dashboard' ? 'nav-item-active' : ''}`}
-          onClick={() => onNavigate('dashboard')}
+          onClick={() => handleNavigation('dashboard')}
         >
           <div className="nav-icon">
             <DashboardIcon />
@@ -180,7 +214,7 @@ export default function Sidebar({ currentPage, onNavigate }) {
 
         <button
           className={`nav-item ${currentPage === 'settings' ? 'nav-item-active' : ''}`}
-          onClick={() => onNavigate('settings')}
+          onClick={() => handleNavigation('settings')}
         >
           <div className="nav-icon">
             <SettingsIcon />
@@ -194,20 +228,29 @@ export default function Sidebar({ currentPage, onNavigate }) {
         onClose={() => setIsActivityModalOpen(false)}
         activeTab={activityTab}
         onTabChange={setActivityTab}
+        sidebarWidth={sidebarWidth}
       />
 
       <div className="sidebar-footer">
         <div className="status-container">
           <div className="status-item">
             <button className="status-button">
-              <div className="status-icon">
+              <div className="status-icon status-icon-check">
                 <CheckIcon />
+              </div>
+              <div className="status-badge"></div>
+            </button>
+          </div>
+          <div className="status-item">
+            <button className="status-button">
+              <div className="status-icon status-icon-atom">
+                <AtomIcon />
               </div>
             </button>
           </div>
           <div className="status-item">
             <button className="status-button">
-              <div className="status-icon">
+              <div className="status-icon status-icon-eye">
                 <EyeIcon />
               </div>
             </button>
